@@ -27,16 +27,16 @@ The result of negotiation is provided to our application via factory services we
 To achieve this the yaml configuration for this service looks like:
 
 ```yaml
-    # Resources/config/services.yml
-    services:
-        # ...
+# Resources/config/services.yml
+services:
+    # ...
 
-        mime_best_api:
-            class: ptlis\ConNeg\Type\Mime\MimeTypeInterface
-            factory_service: ptlis_con_neg.factory
-            factory_method: mimeBest                        # The type of negotiation to perform
-            arguments:
-              - application/json,application/xml;q=0.8      # Your application preferences
+    mime_best_api:
+        class: ptlis\ConNeg\Type\Mime\MimeTypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: mimeBest                        # The type of negotiation to perform
+        arguments:
+          - application/json,application/xml;q=0.8      # Your application preferences
 ```
 
 
@@ -48,20 +48,20 @@ To achieve this the yaml configuration for this service looks like:
 If we want to use this from a controller inheriting from Symfony's base controller, then we may use the service locator:
 
 ```php
-    // Your/Bundle/Controller/MyController.php
-    namespace Your/Bundle/Controller;
+// Your/Bundle/Controller/MyController.php
+namespace Your/Bundle/Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class MyController extends Controller
+class MyController extends Controller
+{
+    public function indexAction()
     {
-        public function indexAction()
-        {
-            $mimeBest = $this->get('mime_best_api');
+        $mimeBest = $this->get('mime_best_api');
 
-            // Emit appropriate response
-        }
+        // Emit appropriate response
     }
+}
 ```
 
 
@@ -70,36 +70,36 @@ If we want to use this from a controller inheriting from Symfony's base controll
 If, instead, we are using controllers loaded as services we can simply add it as an argument in our controller's service definition:
 
 ```yaml
-    # Resources/config/services.yml
-    services:
-        controller.mime_best:
-            class: ptlis\TestBundle\Controller\MimeBest
-            arguments:
-              - @mime_best_api
+# Resources/config/services.yml
+services:
+    controller.mime_best:
+        class: ptlis\TestBundle\Controller\MimeBest
+        arguments:
+          - @mime_best_api
 ```
 
 The type is injected into the constructor of our controller, where we can store it for use when processing the request.
 
 ```php
-    # Your/Bundle/Controller/MimeBest
-    namespace Your/Bundle/Controller;
+# Your/Bundle/Controller/MimeBest
+namespace Your/Bundle/Controller;
 
-    use ptlis\ConNeg\TypePair\TypePairInterface;
+use ptlis\ConNeg\TypePair\TypePairInterface;
 
-    class MimeBest
+class MimeBest
+{
+    private $mimeBest;
+
+    public function __construct(TypePairInterface $mimeBest)
     {
-        private $mimeBest;
-
-        public function __construct(TypePairInterface $mimeBest)
-        {
-            $this->mimeBest = $mimeBest;
-        }
-
-        public function index()
-        {
-            $this->mimeBest->getType(); // The preferred mime-type
-
-            // Emit appropriate response
-        }
+        $this->mimeBest = $mimeBest;
     }
+
+    public function index()
+    {
+        $this->mimeBest->getType(); // The preferred mime-type
+
+        // Emit appropriate response
+    }
+}
 ```
