@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Conneg-bundle by ptlis</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Conneg-bundle</h1>
+        <p>Symfony2 Bundle providing content a negotiation service.</p>
+
+        <p class="view"><a href="https://github.com/ptlis/conneg-bundle">View the Project on GitHub <small>ptlis/conneg-bundle</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/ptlis/conneg-bundle/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ptlis/conneg-bundle/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ptlis/conneg-bundle">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="conneg-bundle" class="anchor" href="#conneg-bundle"><span class="octicon octicon-link"></span></a>ConNeg Bundle</h1>
+
+<p>A Symfony2 Bundle providing content negotiation services you your application, built for PHP &gt;= 5.3 using the <a href="https://github.com/ptlis/conneg">ptlis/ConNeg</a> packages.</p>
+
+<p><a href="https://travis-ci.org/ptlis/conneg-bundle"><img src="https://travis-ci.org/ptlis/conneg-bundle.png?branch=master" alt="Build Status"></a> <a href="https://scrutinizer-ci.com/g/ptlis/conneg-bundle/"><img src="https://scrutinizer-ci.com/g/ptlis/conneg-bundle/badges/coverage.png?s=38ad9458830dccd8bce51a4078c2faa259f8fcaf" alt="Code Coverage"></a> <a href="https://scrutinizer-ci.com/g/ptlis/conneg-bundle/"><img src="https://scrutinizer-ci.com/g/ptlis/conneg-bundle/badges/quality-score.png?s=4c8c1c746a83a5e7377f06df3c5072691976671e" alt="Scrutinizer Quality Score"></a> <a href="https://packagist.org/packages/ptlis/conneg-bundle"><img src="https://poser.pugx.org/ptlis/conneg-bundle/v/stable.png" alt="Latest Stable Version"></a></p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a name="add-dependency" class="anchor" href="#add-dependency"><span class="octicon octicon-link"></span></a>Add Dependency</h3>
+
+<p>From the console:</p>
+
+<pre lang="shell"><code>    $ composer require ptlis/conneg-bundle:@dev
+</code></pre>
+
+<p>Or by Editing composer.json:</p>
+
+<div class="highlight highlight-json"><pre>    <span class="s2">"require"</span><span class="err">:</span> <span class="p">{</span>
+        <span class="err">...</span>
+        <span class="nt">"ptlis/conneg-bundle"</span><span class="p">:</span> <span class="s2">"@dev"</span><span class="p">,</span>
+        <span class="err">...</span>
+    <span class="p">}</span><span class="err">,</span>
+</pre></div>
+
+<p>Followed by a composer update:</p>
+
+<pre lang="shell"><code>    $ composer update
+</code></pre>
+
+<h3>
+<a name="add-bundle-to-appkernel" class="anchor" href="#add-bundle-to-appkernel"><span class="octicon octicon-link"></span></a>Add Bundle to AppKernel</h3>
+
+<div class="highlight highlight-php"><pre>    <span class="c1"># app/AppKernel.php</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">registerBundles</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$bundles</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+            <span class="c1">// ...</span>
+            <span class="k">new</span> <span class="nx">ptlis\ConNegBundle\ptlisConNegBundle</span><span class="p">(),</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="negotiation-as-a-service" class="anchor" href="#negotiation-as-a-service"><span class="octicon octicon-link"></span></a>Negotiation as a Service</h3>
+
+<p>Firstly we must create the negotiation service, this example is for an api that prefers to emit json but may emit xml.</p>
+
+<p>The yaml configuration for this service looks like:</p>
+
+<div class="highlight highlight-yaml"><pre>    <span class="c1"># Resources/config/services.yml</span>
+    <span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">// ...</span>
+
+        <span class="l-Scalar-Plain">mime_best_api</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ptlis\ConNeg\Type\Mime\MimeTypeInterface</span>
+            <span class="l-Scalar-Plain">factory_service</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ptlis_con_neg.factory</span>
+            <span class="l-Scalar-Plain">factory_method</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mimeBest</span>
+            <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span>
+              <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">application/json;q=1,application/xml;q=0.8</span>
+</pre></div>
+
+<h4>
+<a name="via-symfony-controller" class="anchor" href="#via-symfony-controller"><span class="octicon octicon-link"></span></a>Via Symfony Controller</h4>
+
+<p>To retrieve the best match from a controller inheriting from Symfony's base controller use the service locator:</p>
+
+<div class="highlight highlight-php"><pre>    <span class="c1"># Controllers/MyController</span>
+    <span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
+
+    <span class="k">class</span> <span class="nc">MyController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">indexAction</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="nv">$mimeBest</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="err">'</span><span class="nx">mime_best_api</span><span class="p">);</span>
+
+            <span class="c1">// Emit appropriate response</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<h4>
+<a name="via-service-controller" class="anchor" href="#via-service-controller"><span class="octicon octicon-link"></span></a>Via Service Controller</h4>
+
+<p>To retrieve the best match from a controller loaded as a service add the service as an argument to your controller:</p>
+
+<div class="highlight highlight-yaml"><pre>    <span class="c1"># Resources/config/services.yml</span>
+    <span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">controller.mime_best</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ptlis\TestBundle\Controller\MimeBest</span>
+            <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span>
+              <span class="p-Indicator">-</span> <span class="err">@</span><span class="l-Scalar-Plain">mime_best_api</span>
+</pre></div>
+
+<p>And store for use when processing the request.</p>
+
+<div class="highlight highlight-php"><pre>    <span class="c1"># Controllers/MimeBest</span>
+    <span class="k">use</span> <span class="nx">ptlis\ConNeg\TypePair\TypePairInterface</span><span class="p">;</span>
+
+    <span class="k">class</span> <span class="nc">MimeBest</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="nv">$mimeBest</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">TypePairInterface</span> <span class="nv">$mimeBest</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mimeBest</span> <span class="o">=</span> <span class="nv">$mimeBest</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">mimeBest</span><span class="o">-&gt;</span><span class="na">getType</span><span class="p">();</span> <span class="c1">// The preferred mime-type</span>
+
+            <span class="c1">// Emit appropriate response</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ptlis">ptlis</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
