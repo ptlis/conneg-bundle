@@ -1,0 +1,44 @@
+
+
+charset_best:
+    path:       /charset_best
+    defaults:   { _controller: controller.charset_best:index }
+    methods:    [ GET ]
+
+charset_all:
+    path:       /charset_all
+    defaults:   { _controller: controller.charset_all:index }
+    methods:    [ GET ]
+
+
+encoding_best:
+    path:       /encoding_best
+    defaults:   { _controller: controller.encoding_best:index }
+    methods:    [ GET ]
+
+encoding_all:
+    path:       /encoding_all
+    defaults:   { _controller: controller.encoding_all:index }
+    methods:    [ GET ]
+
+
+language_best:
+    path:       /language_best
+    defaults:   { _controller: controller.language_best:index }
+    methods:    [ GET ]
+
+language_all:
+    path:       /language_all
+    defaults:   { _controller: controller.language_all:index }
+    methods:    [ GET ]
+
+
+mime_best:
+    path:       /mime_best
+    defaults:   { _controller: controller.mime_best:index }
+    methods:    [ GET ]
+
+mime_all:
+    path:       /mime_all
+    defaults:   { _controller: controller.mime_all:index }
+    methods:    [ GET ]

@@ -1,0 +1,111 @@
+
+parameters:
+
+    charset_prefer_utf-8: iso-8859-5;q=0.5,utf-8;q=0.8
+    encoding_prefer_gzip: gzip;q=0.85,deflate;q=0.6
+    language_prefer_en-gb: en-gb;q=0.9,en-us;q=0.6
+    mime_prefer_json: application/json;q=1,application/xml;q=0.8
+
+
+services:
+
+# Conneg providers
+
+    charset_best_api:
+        class: ptlis\ConNeg\Type\TypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: charsetBest
+        arguments:
+          - %charset_prefer_utf-8%
+
+    charset_all_api:
+        class: ptlis\ConNeg\Type\TypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: charsetAll
+        arguments:
+          - %charset_prefer_utf-8%
+
+    encoding_best_api:
+        class: ptlis\ConNeg\Type\TypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: encodingBest
+        arguments:
+          - %encoding_prefer_gzip%
+
+    encoding_all_api:
+        class: ptlis\ConNeg\Type\TypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: encodingAll
+        arguments:
+          - %encoding_prefer_gzip%
+
+    language_best_api:
+        class: ptlis\ConNeg\Type\TypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: languageBest
+        arguments:
+          - %language_prefer_en-gb%
+
+    language_all_api:
+        class: ptlis\ConNeg\Type\TypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: languageAll
+        arguments:
+          - %language_prefer_en-gb%
+
+    mime_best_api:
+        class: ptlis\ConNeg\Type\Mime\MimeTypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: mimeBest
+        arguments:
+          - %mime_prefer_json%
+
+    mime_all_api:
+        class: ptlis\ConNeg\Type\Mime\MimeTypeInterface
+        factory_service: ptlis_con_neg.factory
+        factory_method: mimeAll
+        arguments:
+          - %mime_prefer_json%
+
+
+# Controllers
+
+    controller.charset_best:
+        class: ptlis\ConNegBundle\Test\Fixtures\Controller\CharsetBest
+        arguments:
+          - @charset_best_api
+
+    controller.charset_all:
+        class: ptlis\ConNegBundle\Test\Fixtures\Controller\CharsetAll
+        arguments:
+          - @charset_all_api
+
+    controller.encoding_best:
+        class: ptlis\ConNegBundle\Test\Fixtures\Controller\EncodingBest
+        arguments:
+          - @encoding_best_api
+
+    controller.encoding_all:
+        class: ptlis\ConNegBundle\Test\Fixtures\Controller\EncodingAll
+        arguments:
+          - @encoding_all_api
+
+    controller.language_best:
+        class: ptlis\ConNegBundle\Test\Fixtures\Controller\LanguageBest
+        arguments:
+          - @language_best_api
+
+    controller.language_all:
+        class: ptlis\ConNegBundle\Test\Fixtures\Controller\LanguageAll
+        arguments:
+          - @language_all_api
+
+    controller.mime_best:
+        class: ptlis\ConNegBundle\Test\Fixtures\Controller\MimeBest
+        arguments:
+          - @mime_best_api
+
+    controller.mime_all:
+        class: ptlis\ConNegBundle\Test\Fixtures\Controller\MimeAll
+        arguments:
+          - @mime_all_api

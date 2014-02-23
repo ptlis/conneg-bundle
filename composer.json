@@ -1,0 +1,51 @@
+{
+    "name":         "ptlis/conneg-bundle",
+    "description":  "Symfony2 Bundle supporting content negotiation.",
+    "license":      "MIT",
+    "keywords":     [
+        "content",
+        "negotiation",
+        "parse",
+        "http",
+        "field",
+        "header",
+        "types",
+        "charset",
+        "language",
+        "mime",
+        "encoding",
+        "bundle",
+        "symfony",
+        "symfony2"
+    ],
+    "type":         "library",
+    "authors": [
+        {
+            "name": "brian ridley",
+            "email":"ptlis@ptlis.net"
+        }
+    ],
+    "require": {
+        "php":                      ">=5.3.0",
+        "ptlis/conneg":             "@dev",
+        "symfony/framework-bundle": ">=2.3.0",
+        "symfony/symfony":          ">=2.3.0"
+    },
+    "require-dev": {
+        "pdepend/pdepend":                      "1.1.*",
+        "phploc/phploc":                        "2.0.*",
+        "phpmd/phpmd":                          "@dev",
+        "phpunit/phpunit":                      "3.7.*",
+        "sebastian/phpcpd":                     "2.0.*",
+        "squizlabs/php_codesniffer":            "1.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ptlis\\ConNegBundle\\": "src/",
+            "ptlis\\ConNegBundle\\Test\\": "tests/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}

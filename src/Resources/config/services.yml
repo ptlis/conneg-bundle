@@ -1,0 +1,10 @@
+services:
+
+    ptlis_con_neg.negotiate:
+        class: ptlis\ConNeg\Negotiate
+
+    ptlis_con_neg.factory:
+        class: ptlis\ConNegBundle\Service\TypeFactory
+        arguments:
+          - @request_stack
+          - @ptlis_con_neg.negotiate
