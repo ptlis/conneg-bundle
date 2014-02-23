@@ -12,3 +12,7 @@
 .container .hljs {
     background-color: transparent;
 }
+
+body {
+    overflow-y: scroll;
+}
