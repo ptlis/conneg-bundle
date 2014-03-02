@@ -16,8 +16,8 @@ install:
     # Configure appropriate symfony packages
     - composer require symfony/framework-bundle:${SYMFONY_VERSION} symfony/symfony:${SYMFONY_VERSION} --no-update
 
-    # Manually configure build tools
-    - composer require satooshi/php-coveralls:* phpunit/phpcov:2.0.*@dev phpunit/phpunit:4.0.*@dev phpunit/php-code-coverage:2.0.*@dev phpunit/phpunit-mock-objects:2.0.*@dev sebastian/environment:1.*@dev --no-update
+    # Manually configure build tools (excluding HHVM which lacks libxml)
+    - if [[ "${TRAVIS_PHP_VERSION}" == "hhvm" ]]; then composer require satooshi/php-coveralls:* phpunit/phpcov:2.0.*@dev phpunit/phpunit:4.0.*@dev phpunit/php-code-coverage:2.0.*@dev phpunit/phpunit-mock-objects:2.0.*@dev sebastian/environment:1.*@dev --no-update; fi
 
     # Install deps
     - composer install --no-dev
@@ -29,7 +29,7 @@ script:
 after_script:
 
     # Combine coverage reports
-    - ./bin/phpcov merge --clover coverage.xml build/logs/
+    - if [[ "${TRAVIS_PHP_VERSION}" == "hhvm" ]]; then ./bin/phpcov merge --clover coverage.xml build/logs/; fi
 
     # Upload coverage to scrutinizer
     - wget https://scrutinizer-ci.com/ocular.phar
