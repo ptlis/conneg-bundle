@@ -16,8 +16,7 @@ env:
   - SYMFONY_VERSION="2.4.*"
 
 install:
-   - composer require symfony/framework-bundle:${SYMFONY_VERSION}
-   - composer require symfony/symfony:${SYMFONY_VERSION}
+   - composer require symfony/framework-bundle:${SYMFONY_VERSION} symfony/symfony:${SYMFONY_VERSION} --no-dev
 
 script:
     - phpunit --coverage-clover=coverage.clover
