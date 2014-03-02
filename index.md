@@ -6,7 +6,7 @@ name: index
 # ConNeg Bundle
 
 
-A Symfony2 Bundle providing content negotiation services you your application, built for PHP >= 5.3 and Symfony >= 2.3.
+A Symfony2 Bundle providing content negotiation services you your application, built for PHP >= 5.3 and Symfony >= 2.2.
 
 
 ## Introduction
@@ -27,3 +27,8 @@ This library offers a bridge between Symfony and the [ptlis/ConNeg](https://gith
 * [Installation](installation.html)
 * [Usage](usage.html)
 * [Licence](license.html)
+
+
+## Contributing
+
+You can contribute by submittining an Issue to the [issue tracker](https://github.com/ptlis/conneg-bundle/issues), improving the [documentation](https://github.com/ptlis/conneg-bundle/tree/gh-pages) or submitting a pull request. For pull requests i'd prefer that the code style and test coverage is maintained, but I am happy to work through any minor issues that may arise so that the request can be merged.

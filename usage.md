@@ -42,8 +42,10 @@ services:
 
 ## Using the Service
 
+The two usage patterns described below are functionally identical and demonstrate in concrete terms how to use the bundle.
 
-### Via Symfony Controller
+
+### Standard Symfony Controller
 
 If we want to use this from a controller inheriting from Symfony's base controller, then we may use the service locator:
 
@@ -65,7 +67,7 @@ class MyController extends Controller
 ```
 
 
-### Via Controller as a Service
+### Controller as a Service
 
 If, instead, we are using controllers loaded as services we can simply add it as an argument in our controller's service definition:
 
