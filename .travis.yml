@@ -13,7 +13,7 @@ env:
   - SYMFONY_VERSION="2.4.*"
 
 install:
-   - composer require symfony/framework-bundle:${SYMFONY_VERSION} symfony/symfony:${SYMFONY_VERSION}
+   - composer require symfony/framework-bundle:${SYMFONY_VERSION} symfony/symfony:${SYMFONY_VERSION} --no-update
    - composer install --no-dev
 
 script:
