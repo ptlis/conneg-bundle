@@ -1,0 +1,11 @@
+services:
+
+    ptlis_con_neg.negotiate:
+        class: ptlis\ConNeg\Negotiate
+
+    ptlis_con_neg.factory:
+        class: ptlis\ConNegBundle\Service\LegacyTypeFactory
+        arguments:
+          - @request
+          - @ptlis_con_neg.negotiate
+        scope: request

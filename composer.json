@@ -28,8 +28,8 @@
     "require": {
         "php":                      ">=5.3.0",
         "ptlis/conneg":             "@dev",
-        "symfony/framework-bundle": ">=2.3.0",
-        "symfony/symfony":          ">=2.3.0"
+        "symfony/framework-bundle": ">=2.2.0",
+        "symfony/symfony":          ">=2.2.0"
     },
     "require-dev": {
         "pdepend/pdepend":                      "1.1.*",

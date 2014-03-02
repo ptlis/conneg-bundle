@@ -17,17 +17,17 @@ use ptlis\ConNeg\Collection\MimeTypePairCollection;
 use ptlis\ConNeg\Collection\SharedTypePairCollection;
 use ptlis\ConNeg\Negotiate;
 use ptlis\Conneg\TypePair\TypePairInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Factory service that creates Types, TypeCollections for content negotiation (for Symfony >= 2.4).
+ * Factory service that creates Types, TypeCollections for content negotiation (for Symfony <= 2.3).
  */
-class TypeFactory
+class LegacyTypeFactory
 {
     /**
-     * @var RequestStack
+     * @var Request
      */
-    private $requestStack;
+    private $request;
 
     /**
      * @var Negotiate
@@ -38,12 +38,13 @@ class TypeFactory
     /**
      * Constructor
      *
-     * @param RequestStack $requestStack
+     * @param Request $request
      * @param Negotiate    $negotiate
      */
-    public function __construct(RequestStack $requestStack, Negotiate $negotiate)
+    public function __construct(Request $request, Negotiate $negotiate)
     {
-        $this->requestStack = $requestStack;
+
+        $this->request = $request;
         $this->negotiate = $negotiate;
     }
 
@@ -57,9 +58,7 @@ class TypeFactory
      */
     public function charsetAll($appTypes)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        $uaField = $request->server->get('HTTP_ACCEPT_CHARSET', '');
+        $uaField = $this->request->server->get('HTTP_ACCEPT_CHARSET', '');
 
         return $this->negotiate->charsetAll($uaField, $appTypes);
     }
@@ -74,9 +73,7 @@ class TypeFactory
      */
     public function charsetBest($appTypes)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        $uaField = $request->server->get('HTTP_ACCEPT_CHARSET', '');
+        $uaField = $this->request->server->get('HTTP_ACCEPT_CHARSET', '');
 
         return $this->negotiate->charsetBest($uaField, $appTypes);
     }
@@ -91,9 +88,7 @@ class TypeFactory
      */
     public function encodingAll($appTypes)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        $uaField = $request->server->get('HTTP_ACCEPT_ENCODING', '');
+        $uaField = $this->request->server->get('HTTP_ACCEPT_ENCODING', '');
 
         return $this->negotiate->encodingAll($uaField, $appTypes);
     }
@@ -108,9 +103,7 @@ class TypeFactory
      */
     public function encodingBest($appTypes)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        $uaField = $request->server->get('HTTP_ACCEPT_ENCODING', '');
+        $uaField = $this->request->server->get('HTTP_ACCEPT_ENCODING', '');
 
         return $this->negotiate->encodingBest($uaField, $appTypes);
     }
@@ -125,9 +118,7 @@ class TypeFactory
      */
     public function languageAll($appTypes)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        $uaField = $request->server->get('HTTP_ACCEPT_LANGUAGE', '');
+        $uaField = $this->request->server->get('HTTP_ACCEPT_LANGUAGE', '');
 
         return $this->negotiate->languageAll($uaField, $appTypes);
     }
@@ -142,9 +133,7 @@ class TypeFactory
      */
     public function languageBest($appTypes)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        $uaField = $request->server->get('HTTP_ACCEPT_LANGUAGE', '');
+        $uaField = $this->request->server->get('HTTP_ACCEPT_LANGUAGE', '');
 
         return $this->negotiate->languageBest($uaField, $appTypes);
     }
@@ -159,9 +148,7 @@ class TypeFactory
      */
     public function mimeAll($appTypes)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        $uaField = $request->server->get('HTTP_ACCEPT', '');
+        $uaField = $this->request->server->get('HTTP_ACCEPT', '');
 
         return $this->negotiate->mimeAll($uaField, $appTypes);
     }
@@ -176,9 +163,7 @@ class TypeFactory
      */
     public function mimeBest($appTypes)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        $uaField = $request->server->get('HTTP_ACCEPT', '');
+        $uaField = $this->request->server->get('HTTP_ACCEPT', '');
 
         return $this->negotiate->mimeBest($uaField, $appTypes);
     }

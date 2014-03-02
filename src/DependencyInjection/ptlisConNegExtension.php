@@ -36,6 +36,12 @@ class ptlisConNegExtension extends Extension
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+
+        // Load appropriate service definitions based on presence of RequestStack (present means >= 2.4.0)
+        if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+            $loader->load('services.yml');
+        } else {
+            $loader->load('legacy_services.yml');
+        }
     }
 }
