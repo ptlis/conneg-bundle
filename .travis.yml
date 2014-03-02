@@ -17,6 +17,7 @@ env:
 
 install:
    - composer require symfony/framework-bundle:${SYMFONY_VERSION}
+   - composer require symfony/symfony:${SYMFONY_VERSION}
 
 script:
     - phpunit --coverage-clover=coverage.clover
