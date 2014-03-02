@@ -13,8 +13,13 @@ env:
   - SYMFONY_VERSION="2.4.*"
 
 install:
-    # Avoid installing development deps, some depend upon libxml which is not available in HHVM
-    - composer require symfony/framework-bundle:${SYMFONY_VERSION} symfony/symfony:${SYMFONY_VERSION} satooshi/php-coveralls:* --no-update
+    # Configure appropriate symfony packages
+    - composer require symfony/framework-bundle:${SYMFONY_VERSION} symfony/symfony:${SYMFONY_VERSION} --no-update
+
+    # Manually configure build tools
+    - composer require satooshi/php-coveralls:* phpunit/phpcov:2.0.*@dev phpunit/phpunit:4.0.*@dev phpunit/php-code-coverage:2.0.*@dev phpunit/phpunit-mock-objects:2.0.*@dev sebastian/environment:1.*@dev --no-update
+
+    # Install deps
     - composer install --no-dev
 
 script:
@@ -22,9 +27,13 @@ script:
     - phpunit --coverage-clover=build/logs/clover-${SYMFONY_VERSION}-${TRAVIS_PHP_VERSION}.xml
 
 after_script:
+
+    # Combine coverage reports
+    - ./bin/phpcov merge --clover coverage.xml build/logs/
+
     # Upload coverage to scrutinizer
     - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover-*.xml
+    - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
 
     # Upload coverage to coveralls.io
     - php bin/coveralls -v

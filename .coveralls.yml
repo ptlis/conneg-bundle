@@ -2,4 +2,4 @@
 
 # glob
 src_dir: src/
-coverage_clover: build/logs/clover-*.xml
+coverage_clover: coverage.xml
