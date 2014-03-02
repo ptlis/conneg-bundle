@@ -13,11 +13,18 @@ env:
   - SYMFONY_VERSION="2.4.*"
 
 install:
-   - composer require symfony/framework-bundle:${SYMFONY_VERSION} symfony/symfony:${SYMFONY_VERSION} --no-update
-   - composer install --no-dev
+    # Avoid installing development deps, some depend upon libxml which is not available in HHVM
+    - composer require symfony/framework-bundle:${SYMFONY_VERSION} symfony/symfony:${SYMFONY_VERSION} satooshi/php-coveralls:* --no-update
+    - composer install --no-dev
 
 script:
-    - phpunit --coverage-clover=coverage.clover
+    - mkdir -p build/logs
+    - phpunit --coverage-clover=build/logs/clover-${SYMFONY_VERSION}-${TRAVIS_PHP_VERSION}.xml
+
 after_script:
+    # Upload coverage to scrutinizer
     - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover-*.xml
+
+    # Upload coverage to coveralls.io
+    - php bin/coveralls -v
