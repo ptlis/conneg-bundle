@@ -24,7 +24,7 @@ install:
 
 script:
     - mkdir -p build/logs
-    - phpunit --coverage-clover=build/logs/clover-${SYMFONY_VERSION}-${TRAVIS_PHP_VERSION}.xml
+    - phpunit -c phpunit-travis.xml --coverage-clover=build/logs/clover-${SYMFONY_VERSION}-${TRAVIS_PHP_VERSION}.xml
 
 after_script:
 

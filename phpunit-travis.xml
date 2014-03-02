@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="tests/bootstrap.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         strict="false"
+         verbose="true">
+
+    <testsuites>
+        <testsuite name="ConNeg Bundle">
+            <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <server name="KERNEL_DIR" value="./tests/Fixtures/App/app" />
+        <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
+    </php>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/</directory>
+        </whitelist>
+        <exclude>
+            <directory suffix=".php">./vendor/</directory>
+        </exclude>
+    </filter>
+
+</phpunit>
