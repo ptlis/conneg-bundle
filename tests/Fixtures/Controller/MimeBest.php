@@ -13,7 +13,7 @@
 
 namespace ptlis\ConNegBundle\Test\Fixtures\Controller;
 
-use ptlis\ConNeg\Type\TypeInterface;
+use ptlis\ConNeg\Type\Shared\Interfaces\TypeInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
